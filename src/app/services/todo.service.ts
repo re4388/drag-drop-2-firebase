@@ -24,11 +24,14 @@ export class TodoService {
     if (tasksStored !== null) {
       tasks = JSON.parse(tasksStored);
     }
+
+    // default group is 0
     const newTask: ToDo = {
+      id: tasks.length + 1,
       done: false,
+      group: `todo-group`,
       description: addDesc,
       url: addItemUrl,
-      id: tasks.length + 1,
     };
 
     tasks.push(newTask);
@@ -44,13 +47,14 @@ export class TodoService {
       consolidatedList.filter((task) => {
         if (item.id === task.id) {
           if (item.id === taskToToggle.id) {
-            item.done = taskToToggle.done;
+            item.group = taskToToggle.group;
           }
 
+          item.done = taskToToggle.done;
           item.order = task.order;
           item.description = task.description;
-          item.id = task.id;
           item.url = task.url;
+          item.id = task.id;
         }
       });
 

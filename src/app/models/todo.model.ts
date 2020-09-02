@@ -1,7 +1,8 @@
 export interface ToDo {
-  done: boolean;
+  id: number;
   order?: number;
+  group: string;
+  done: boolean;
   description: string;
   url: string;
-  id: number;
 }

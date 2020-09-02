@@ -27,9 +27,7 @@ export class AddTodoDialogComponent {
     }
 
     console.log(`todoForm.value.url`, todoForm.value.url);
-
     this.todoService.addTask(todoForm.value.description, todoForm.value.url);
-
     this.dialogRef.close();
   }
 

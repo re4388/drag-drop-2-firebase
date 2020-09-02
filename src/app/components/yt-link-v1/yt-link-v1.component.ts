@@ -40,25 +40,23 @@ export class YtLinkV1Component implements OnInit, AfterViewInit {
   // items$: any;
   // error$: any;
 
-
   constructor(
     // private ngZone: NgZone,
     private todoService: TodoService,
-    public dialog: MatDialog,
-    // private store: Store<any>
+    public dialog: MatDialog // private store: Store<any>
   ) {
     this.getTodos();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getTodos();
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     // this.setAllHandleTransform();
   }
 
-  openAddTodoDialog() {
+  openAddTodoDialog(): void {
     const dialogRef = this.dialog.open(AddTodoDialogComponent, {
       width: '70vw',
       data: {},
@@ -68,11 +66,16 @@ export class YtLinkV1Component implements OnInit, AfterViewInit {
     });
   }
 
-  getTodos() {
-    let allTasks = this.todoService.getTasks();
+  getTodos(): void {
+    const allTasks = this.todoService.getTasks();
     this.allTasks = allTasks || [];
-    this.todo = this.allTasks.filter((t) => !t.done);
-    this.done = this.allTasks.filter((t) => t.done);
+
+    // here is where we group data
+    // this.todo = this.allTasks.filter((t) => !t.done);
+    // this.done = this.allTasks.filter((t) => t.done);
+
+    this.todo = this.allTasks.filter((t) => t.group === `todo-group`);
+    this.done = this.allTasks.filter((t) => t.group === `done-group`);
 
     // Sort in ascending order of each list.
     this.todo.sort(this.dynamicSort('order', 'asc'));
@@ -103,17 +106,22 @@ export class YtLinkV1Component implements OnInit, AfterViewInit {
         event.currentIndex
       );
 
+      // console.log(`event =>`, event.container.element.nativeElement["ng-reflect-id"]);
+      console.log(`event.container, TO =>`, event.container.id);
+
       // Reference of read only data.
       const previousOriginal = event.previousContainer.data;
-      console.log(`previousOriginal`, previousOriginal);
+      // console.log(`previousOriginal`, previousOriginal);
 
       // Map a new copy of event data to bring back to service.
       copyOfPrevious = previousOriginal.map((obj) => {
         const rObj: any = {};
-        rObj.done = obj.done;
-        rObj.description = obj.description;
         rObj.id = obj.id;
+        rObj.done = obj.done;
+        rObj.group = obj.group;
         rObj.order = obj.order;
+        rObj.description = obj.description;
+        rObj.url = obj.url;
         return rObj;
       });
 
@@ -130,7 +138,7 @@ export class YtLinkV1Component implements OnInit, AfterViewInit {
     // taskToToggle = this.changeItemProp(event, isSwapped)
 
     // Clone event data for toggle state.
-    console.log(`event.item`, event.item);
+    // console.log(`event.item`, event.item.dropContainer.id);
     const toggleOfCopy = event.item.data;
     // console.log(`toggleOfCopy`, toggleOfCopy)
     const taskToToggle = { ...toggleOfCopy };
@@ -139,12 +147,16 @@ export class YtLinkV1Component implements OnInit, AfterViewInit {
     // Determine if toggling done should occur.
     // this is where we changed to property!
     // if you have multi-group, you will need to change here
+    // if (isSwapped) {
+    //   // Toggle done state.
+    //   taskToToggle.done = !taskToToggle.done;
+    // } else {
+    //   // Let done state pass.
+    //   taskToToggle.done = taskToToggle.done;
+    // }
+
     if (isSwapped) {
-      // Toggle done state.
-      taskToToggle.done = !taskToToggle.done;
-    } else {
-      // Let done state pass.
-      taskToToggle.done = taskToToggle.done;
+      taskToToggle.group = event.container.id;
     }
     console.log(`after swapped chcek`, taskToToggle);
 
@@ -155,10 +167,12 @@ export class YtLinkV1Component implements OnInit, AfterViewInit {
     // Map a new copy of event data to bring back to service.
     const copyOfOriginal = original.map((obj) => {
       const rObj: any = {};
-      rObj.done = obj.done;
-      rObj.description = obj.description;
       rObj.id = obj.id;
       rObj.order = obj.order;
+      rObj.group = obj.group;
+      rObj.done = obj.done;
+      rObj.description = obj.description;
+      rObj.url = obj.url;
       return rObj;
     });
 
@@ -176,6 +190,8 @@ export class YtLinkV1Component implements OnInit, AfterViewInit {
     }
 
     // update list
+    console.log(`consolidatedList`, consolidatedList);
+
     this.todoService.updateTask(taskToToggle, consolidatedList);
     // this.store.dispatch(updateTask({
     //   toggle: taskToToggle,
@@ -184,28 +200,28 @@ export class YtLinkV1Component implements OnInit, AfterViewInit {
     this.getTodos();
   }
 
-  changeItemProp(event, isSwapped) {
-    // Clone event data for toggle state.
-    const toggleOfCopy = event.item.data;
-    console.log(`toggleOfCopy`, toggleOfCopy);
-    const taskToToggle = { ...toggleOfCopy };
-    console.log(`taskToToggle`, taskToToggle);
+  // changeItemProp(event, isSwapped) {
+  //   // Clone event data for toggle state.
+  //   const toggleOfCopy = event.item.data;
+  //   console.log(`toggleOfCopy`, toggleOfCopy);
+  //   const taskToToggle = { ...toggleOfCopy };
+  //   console.log(`taskToToggle`, taskToToggle);
 
-    // Determine if toggling done should occur.
-    // this is where we changed to property!
-    // if you have multi-group, you will need to change here
-    if (isSwapped) {
-      // Toggle done state.
-      taskToToggle.done = !taskToToggle.done;
-    } else {
-      // Let done state pass.
-      taskToToggle.done = taskToToggle.done;
-    }
+  //   // Determine if toggling done should occur.
+  //   // this is where we changed to property!
+  //   // if you have multi-group, you will need to change here
+  //   if (isSwapped) {
+  //     // Toggle done state.
+  //     taskToToggle.done = !taskToToggle.done;
+  //   } else {
+  //     // Let done state pass.
+  //     taskToToggle.done = taskToToggle.done;
+  //   }
 
-    return toggleOfCopy;
-  }
+  //   return toggleOfCopy;
+  // }
 
-  removeTodo(index: number, tasks: any[]) {
+  removeTodo(index: number, tasks: any[]): void {
     this.todoService.deleteTask(tasks[index]);
     this.getTodos();
     // this.todoService.deleteTask(tasks[index]).subscribe(() => {
@@ -213,7 +229,6 @@ export class YtLinkV1Component implements OnInit, AfterViewInit {
     // });
     // this.store.dispatch(deleteTask({ task: tasks[index] }));
   }
-
 
   dynamicSort(property: string, order: string) {
     let sortOrder = 1;

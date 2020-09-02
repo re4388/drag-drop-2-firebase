@@ -1,3 +1,5 @@
+<div class="content">
+
 <div>
   <h1>My Video Dashboard</h1>
   <mat-form-field class="example-full-width">
@@ -7,20 +9,16 @@
   </mat-form-field>
 </div>
 
-<div cdkDropListGroup
-  class="center">
-  <div
-    class="container todo-container"
-    style="position: relative;">
-
+<div cdkDropListGroup class="center">
+  <div class="todo-container">
     <h2>To Do</h2>
-    <div style="position: relative;">
-
+    <div>
       <div
         cdkDropList
         [cdkDropListData]="todo"
         (cdkDropListDropped)="drop($event)"
         class="todo-list"
+        id="todo-group"
       >
         <div
           cdkDrag
@@ -41,6 +39,8 @@
         </div>
       </div>
     </div>
+
+
     <br>
 
     <button
@@ -58,6 +58,7 @@
         [cdkDropListData]="done"
         (cdkDropListDropped)="drop($event)"
         class="todo-list"
+        id="done-group"
       >
         <div
           cdkDrag
@@ -80,4 +81,5 @@
       </div>
     </div>
   </div>
+</div>
 </div>

@@ -31,13 +31,13 @@ export class SideBarComponent implements OnInit {
       shareReplay()
     );
 
-  toggleTheme(): void {
-    const originalTheme = this.theme;
-    this.theme =
-      this.theme === 'custom-theme-1' ? 'custom-theme-2' : 'custom-theme-1';
-    this.overlayContainer.getContainerElement().classList.remove(originalTheme);
-    this.overlayContainer.getContainerElement().classList.add(this.theme);
-  }
+  // toggleTheme(): void {
+  //   const originalTheme = this.theme;
+  //   this.theme =
+  //     this.theme === 'custom-theme-1' ? 'custom-theme-2' : 'custom-theme-1';
+  //   this.overlayContainer.getContainerElement().classList.remove(originalTheme);
+  //   this.overlayContainer.getContainerElement().classList.add(this.theme);
+  // }
 
   ngOnInit(): void {
     this.overlayContainer.getContainerElement().classList.add(this.theme);
@@ -45,17 +45,17 @@ export class SideBarComponent implements OnInit {
     this.scrollDispatcher
       .scrolled(1000)
       .subscribe((scrollable: CdkScrollable) => {
-        console.log('發生scroll了，來源為：');
+        // console.log('發生scroll了，來源為：');
         console.log(scrollable.getElementRef().nativeElement);
       });
 
     const isSmallScreen = this.breakpointObserver.isMatched(
       '(max-width: 599px)'
     );
-    console.log(`小螢幕(600px以下)？${isSmallScreen}`);
+    // console.log(`小螢幕(600px以下)？${isSmallScreen}`);
   }
 
   logDirChange($event: Direction): void {
-    console.log(`dir被改變了 => ${$event}`);
+    // console.log(`dir被改變了 => ${$event}`);
   }
 }

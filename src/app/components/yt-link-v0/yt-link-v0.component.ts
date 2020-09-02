@@ -68,12 +68,14 @@ export class YtLinkV0Component{
         event.previousIndex,
         event.currentIndex
       );
-      event.previousContainer.data.forEach((x, index) => {
-        x.groupIndex = index;
-      });
+      // event.previousContainer.data.forEach((x, index) => {
+      //   x.groupIndex = index;
+      // });
+      // console.log(`event.item`, event.item.dropContainer.id);
+      console.log(`event.container, TO =>`, event.container.id);
     }
-    event.container.data.forEach((x, index) => {
-      x.groupIndex = index;
-    });
+    // event.container.data.forEach((x, index) => {
+    //   x.groupIndex = index;
+    // });
   }
 }

@@ -9,12 +9,12 @@
     >
       <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
     </button>
-    <span>Angular Material - 20200720</span>
+    <span>To Do</span>
 
     <!-- 在這之後的都會被推到右邊去 -->
     <span class="toolbar-separate"></span>
 
-    <button mat-button (click)="toggleTheme()">切換theme</button>
+    <!-- <button mat-button (click)="toggleTheme()">切換theme</button> -->
 
     <button mat-button *ngIf="bidiMode === 'ltr'" (click)="bidiMode = 'rtl'">
       LTR
@@ -30,9 +30,9 @@
     >
       <mat-icon>message</mat-icon>
     </button>
-    <button mat-icon-button>
+    <!-- <button mat-icon-button>
       <mat-icon>exit_to_app</mat-icon>
-    </button>
+    </button> -->
 
     <mat-menu #messageMenu="matMenu">
       <button mat-menu-item>Hot News</button>
@@ -74,5 +74,7 @@
 
       <router-outlet></router-outlet>
     </mat-sidenav-content>
+
+
   </mat-sidenav-container>
 </section>
