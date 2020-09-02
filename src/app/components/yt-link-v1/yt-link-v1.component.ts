@@ -34,6 +34,7 @@ export class YtLinkV1Component implements OnInit, AfterViewInit {
   allTasks: any = [];
   todo: any = [];
   done: any = [];
+  maybeLater: any = [];
   // myControl = new FormControl();
   filterName: string;
 
@@ -76,10 +77,14 @@ export class YtLinkV1Component implements OnInit, AfterViewInit {
 
     this.todo = this.allTasks.filter((t) => t.group === `todo-group`);
     this.done = this.allTasks.filter((t) => t.group === `done-group`);
+    this.maybeLater = this.allTasks.filter(
+      (t) => t.group === `maybeLater-group`
+    );
 
     // Sort in ascending order of each list.
     this.todo.sort(this.dynamicSort('order', 'asc'));
     this.done.sort(this.dynamicSort('order', 'asc'));
+    this.maybeLater.sort(this.dynamicSort('order', 'asc'));
 
     // below is async op, say you use http
     // this.todoService.getTasks().subscribe(() => {
@@ -221,7 +226,7 @@ export class YtLinkV1Component implements OnInit, AfterViewInit {
   //   return toggleOfCopy;
   // }
 
-  removeTodo(index: number, tasks: any[]): void {
+  remove(index: number, tasks: any[]): void {
     this.todoService.deleteTask(tasks[index]);
     this.getTodos();
     // this.todoService.deleteTask(tasks[index]).subscribe(() => {
