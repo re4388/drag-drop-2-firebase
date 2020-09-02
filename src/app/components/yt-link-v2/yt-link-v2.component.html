@@ -1,0 +1,116 @@
+<div class="content">
+
+  <div>
+    <h1>My Video Dashboard</h1>
+    <mat-form-field class="example-full-width">
+      <mat-label>Search Video</mat-label>
+      <input matInput [(ngModel)]="filterName" placeholder="Description" />
+    </mat-form-field>
+  </div>
+
+  <div class="add-button">
+    <button
+    mat-button color="primary"
+    (click)="openAddTodoDialog()">
+      Add New Video
+    </button>
+  </div>
+
+  <div cdkDropListGroup class="center">
+
+
+
+    <!-- To-do  -->
+    <div class="group-container">
+      <h2>To Do</h2>
+      <div>
+        <div
+          cdkDropList
+          [cdkDropListData]="todo"
+          (cdkDropListDropped)="drop($event)"
+          class="group-list"
+          id="todo-group"
+        >
+          <div
+            cdkDrag
+            *ngFor="let item of todo | filterByName: filterName; index as i"
+            [cdkDragData]="item"
+            class="group-box"
+          >
+            <span>
+              <a href="{{ item.url }}">{{ item.description }}</a>
+            </span>
+            <a (click)="remove(i, todo)" class="delete-button">
+              <i class="material-icons">delete</i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <br />
+
+    </div>
+
+    <!-- done  -->
+    <div class="group-container">
+      <h2>Done</h2>
+      <div>
+        <div
+          cdkDropList
+          [cdkDropListData]="done"
+          (cdkDropListDropped)="drop($event)"
+          class="group-list"
+          id="done-group"
+        >
+          <div
+            cdkDrag
+            *ngFor="let item of done | filterByName: filterName; index as i"
+            [cdkDragData]="item"
+            class="group-box"
+          >
+            <span>
+              <a href="{{ item.url }}">{{ item.description }}</a>
+            </span>
+            <a (click)="remove(i, done)" class="delete-button">
+              <i class="material-icons"> delete </i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- may-later -->
+    <div class="group-container">
+      <h2>May Later</h2>
+      <div>
+        <div
+          cdkDropList
+          [cdkDropListData]="maybeLater"
+          (cdkDropListDropped)="drop($event)"
+          class="group-list"
+          id="maybeLater-group"
+        >
+          <div
+            cdkDrag
+            *ngFor="let item of maybeLater | filterByName: filterName; index as i"
+            [cdkDragData]="item"
+            class="group-box"
+          >
+            <span>
+              <a href="{{ item.url }}">{{ item.description }}</a>
+            </span>
+            <a (click)="remove(i, maybeLater)" class="delete-button">
+              <i class="material-icons">delete</i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <br />
+    </div>
+
+
+
+
+  </div>
+</div>

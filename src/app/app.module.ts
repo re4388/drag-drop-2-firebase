@@ -40,6 +40,8 @@ import { BidiModule } from '@angular/cdk/bidi';
 
 // Other Imports
 import { FilterByNamePipe } from './pipes/filter-by-name.pipe';
+import { YtLinkV2Component } from './components/yt-link-v2/yt-link-v2.component';
+import { AddTodoDialogV2Component } from './components/add-todo-dialog-v2/add-todo-dialog-v2.component';
 
 
 
@@ -53,6 +55,8 @@ import { FilterByNamePipe } from './pipes/filter-by-name.pipe';
     AddTodoDialogComponent,
     SideBarComponent,
     FilterByNamePipe,
+    YtLinkV2Component,
+    AddTodoDialogV2Component,
   ],
   // where you import your module
   imports: [
