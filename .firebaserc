@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "drag-drop-to-watch": {
+      "hosting": {
+        "drapdrop-yt-link": [
+          "drag-drop-to-watch"
+        ]
+      }
+    }
+  }
+}

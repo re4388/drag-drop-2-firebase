@@ -37,14 +37,17 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { BidiModule } from '@angular/cdk/bidi';
 
+/* firebase related */
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireStorageModule, BUCKET } from '@angular/fire/storage';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 // Other Imports
 import { FilterByNamePipe } from './pipes/filter-by-name.pipe';
 import { YtLinkV2Component } from './components/yt-link-v2/yt-link-v2.component';
 import { AddTodoDialogV2Component } from './components/add-todo-dialog-v2/add-todo-dialog-v2.component';
-
-
-
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   // where you declare your component
@@ -83,6 +86,10 @@ import { AddTodoDialogV2Component } from './components/add-todo-dialog-v2/add-to
     MatChipsModule,
     MatAutocompleteModule,
     MatToolbarModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFireStorageModule,
+    AngularFirestoreModule,
   ],
   // global DI
   providers: [],

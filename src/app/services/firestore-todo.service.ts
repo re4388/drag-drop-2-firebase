@@ -1,76 +1,63 @@
 import { Injectable } from '@angular/core';
-import { ToDo } from '../models/todo.model';
+import { ToDo } from '../models/firebaseTodo.model';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection,
+} from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+// import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TodoService {
-  tasks;
 
-  constructor() {}
+  constructor(private afs: AngularFirestore) {}
+
+
+  collectionName = `ToWatchCollection`;
+  private savedCollection: AngularFirestoreCollection<any>;
 
   getTasks() {
-    let tasks = JSON.parse(window.localStorage.getItem('tasks'));
-    if (tasks === null) {
-      tasks = [];
-    }
-    console.log(`getTasks() called finished: `, tasks);
-    return tasks;
+    this.savedCollection = this.afs.collection<ToDo>(this.collectionName);
+    return this.savedCollection.snapshotChanges().pipe(
+      map((actions) =>
+        actions.map((a) => {
+          const data = a.payload.doc.data() as ToDo;
+          const id = a.payload.doc.id;
+          console.log(id);
+          return { id, ...data };
+        })
+      )
+    );
   }
 
-  addTask(addDesc: string, addItemUrl: string) {
-    const tasksStored = window.localStorage.getItem('tasks');
-    let tasks = [];
-    if (tasksStored !== null) {
-      tasks = JSON.parse(tasksStored);
-    }
-
-    // default group is 0
+  addTask(description: string, url: string) {
+    const date = new Date();
+    // default group is `todo-group`
     const newTask: ToDo = {
-      id: tasks.length + 1,
+      date,
       done: false,
       group: `todo-group`,
-      description: addDesc,
-      url: addItemUrl,
+      description,
+      url,
     };
 
-    tasks.push(newTask);
-    window.localStorage.setItem('tasks', JSON.stringify(tasks));
+    return this.savedCollection.add(newTask);
   }
 
   updateTask(toggleTask, consolidatedList) {
     const taskToToggle = toggleTask;
     console.log(`toggleTask`, toggleTask);
-    const tasks = JSON.parse(window.localStorage.getItem('tasks'));
-
-    const saved = tasks.filter((item) => {
-      consolidatedList.filter((task) => {
-        if (item.id === task.id) {
-          if (item.id === taskToToggle.id) {
-            item.group = taskToToggle.group;
-          }
-
-          item.done = taskToToggle.done;
-          item.order = task.order;
-          item.description = task.description;
-          item.url = task.url;
-          item.id = task.id;
-        }
-      });
-
-      return item;
-    });
-    console.log(`===saved===`);
-    console.table(saved);
-
-    window.localStorage.setItem('tasks', JSON.stringify(saved));
+    return this.savedCollection
+      .doc(toggleTask.id)
+      .set({ group: taskToToggle.group }, { merge: true });
   }
 
-  deleteTask(deleteTask) {
-    const tasks = JSON.parse(window.localStorage.getItem('tasks'));
-    const saved = tasks.filter((item) => {
-      return item.id !== deleteTask.id;
-    });
-    window.localStorage.setItem('tasks', JSON.stringify(saved));
+  deleteTask(data) {
+    console.log(data);
+    console.log(data[0].id);
+    return this.savedCollection.doc(data[0].id).delete();
   }
 }

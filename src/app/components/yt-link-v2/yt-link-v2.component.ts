@@ -1,3 +1,4 @@
+import { AddTodoDialogV2Component } from './../add-todo-dialog-v2/add-todo-dialog-v2.component';
 import {
   OnInit,
   AfterViewInit,
@@ -7,8 +8,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AddTodoDialogComponent } from '../../components/add-todo-dialog/add-todo-dialog.component';
-import { TodoService } from '../../services/todo.service';
+// import { TodoService } from '../../services/todo.service';
+import { TodoService } from '../../services/firestore-todo.service';
 // import { Store, select } from '@ngrx/store';
 import {
   CdkDragRelease,
@@ -43,19 +44,18 @@ export class YtLinkV2Component implements OnInit {
 
   constructor(
     // private ngZone: NgZone,
-    private todoService: TodoService,
+    private fireStore: TodoService,
     public dialog: MatDialog // private store: Store<any>
   ) {
-    this.getTodos();
+    // this.getTodos();
   }
 
   ngOnInit(): void {
     this.getTodos();
   }
 
-
   openAddTodoDialog(): void {
-    const dialogRef = this.dialog.open(AddTodoDialogComponent, {
+    const dialogRef = this.dialog.open(AddTodoDialogV2Component, {
       width: '70vw',
       data: {},
     });
@@ -65,28 +65,21 @@ export class YtLinkV2Component implements OnInit {
   }
 
   getTodos(): void {
-    const allTasks = this.todoService.getTasks();
-    this.allTasks = allTasks || [];
+    this.fireStore.getTasks().subscribe((tasks) => {
+      console.log(`getTodos(): `, tasks);
+      this.allTasks = tasks || [];
 
-    // here is where we group data
-    // this.todo = this.allTasks.filter((t) => !t.done);
-    // this.done = this.allTasks.filter((t) => t.done);
+      this.todo = this.allTasks.filter((t) => t.group === `todo-group`);
+      this.done = this.allTasks.filter((t) => t.group === `done-group`);
+      this.maybeLater = this.allTasks.filter(
+        (t) => t.group === `maybeLater-group`
+      );
 
-    this.todo = this.allTasks.filter((t) => t.group === `todo-group`);
-    this.done = this.allTasks.filter((t) => t.group === `done-group`);
-    this.maybeLater = this.allTasks.filter(
-      (t) => t.group === `maybeLater-group`
-    );
-
-    // Sort in ascending order of each list.
-    this.todo.sort(this.dynamicSort('order', 'asc'));
-    this.done.sort(this.dynamicSort('order', 'asc'));
-    this.maybeLater.sort(this.dynamicSort('order', 'asc'));
-
-    // below is async op, say you use http
-    // this.todoService.getTasks().subscribe(() => {
-    // console.log('get tasks')
-    // });
+      // Sort in ascending order of each list.
+      this.todo.sort(this.dynamicSort('order', 'asc'));
+      this.done.sort(this.dynamicSort('order', 'asc'));
+      this.maybeLater.sort(this.dynamicSort('order', 'asc'));
+    });
   }
 
   drop(event: CdkDragDrop<any[]>) {
@@ -109,7 +102,7 @@ export class YtLinkV2Component implements OnInit {
       );
 
       // console.log(`event =>`, event.container.element.nativeElement["ng-reflect-id"]);
-      console.log(`event.container, TO =>`, event.container.id);
+      console.log(`event.container.id, TO =>`, event.container.id);
 
       // Reference of read only data.
       const previousOriginal = event.previousContainer.data;
@@ -118,7 +111,7 @@ export class YtLinkV2Component implements OnInit {
       // Map a new copy of event data to bring back to service.
       copyOfPrevious = previousOriginal.map((obj) => {
         const rObj: any = {};
-        rObj.id = obj.id;
+        rObj.date = obj.date;
         rObj.done = obj.done;
         rObj.group = obj.group;
         rObj.order = obj.order;
@@ -131,7 +124,7 @@ export class YtLinkV2Component implements OnInit {
       copyOfPrevious.forEach((x, index) => {
         x.order = index;
       });
-      console.log(`copyOfPrevious`, copyOfPrevious);
+      // console.log(`copyOfPrevious`, copyOfPrevious);
 
       isSwapped = true;
     }
@@ -144,32 +137,21 @@ export class YtLinkV2Component implements OnInit {
     const toggleOfCopy = event.item.data;
     // console.log(`toggleOfCopy`, toggleOfCopy)
     const taskToToggle = { ...toggleOfCopy };
-    console.log(`taskToToggle`, taskToToggle);
-
-    // Determine if toggling done should occur.
-    // this is where we changed to property!
-    // if you have multi-group, you will need to change here
-    // if (isSwapped) {
-    //   // Toggle done state.
-    //   taskToToggle.done = !taskToToggle.done;
-    // } else {
-    //   // Let done state pass.
-    //   taskToToggle.done = taskToToggle.done;
-    // }
 
     if (isSwapped) {
       taskToToggle.group = event.container.id;
     }
-    console.log(`after swapped chcek`, taskToToggle);
+
+    // console.log(`after swapped chcek`, taskToToggle);
 
     // Reference of read only data.
     const original = event.container.data;
-    console.log(`original`, original);
+    // console.log(`original`, original);
 
     // Map a new copy of event data to bring back to service.
     const copyOfOriginal = original.map((obj) => {
       const rObj: any = {};
-      rObj.id = obj.id;
+      rObj.date = obj.date;
       rObj.order = obj.order;
       rObj.group = obj.group;
       rObj.done = obj.done;
@@ -192,40 +174,19 @@ export class YtLinkV2Component implements OnInit {
     }
 
     // update list
-    console.log(`consolidatedList`, consolidatedList);
+    // console.log(`consolidatedList`, consolidatedList);
+    this.fireStore.updateTask(taskToToggle,
+      consolidatedList).then((tasks) => {
+      this.getTodos();
+    });
 
-    this.todoService.updateTask(taskToToggle, consolidatedList);
-    // this.store.dispatch(updateTask({
-    //   toggle: taskToToggle,
-    //   tasks: consolidatedList
-    // }));
-    this.getTodos();
   }
 
-  // changeItemProp(event, isSwapped) {
-  //   // Clone event data for toggle state.
-  //   const toggleOfCopy = event.item.data;
-  //   console.log(`toggleOfCopy`, toggleOfCopy);
-  //   const taskToToggle = { ...toggleOfCopy };
-  //   console.log(`taskToToggle`, taskToToggle);
 
-  //   // Determine if toggling done should occur.
-  //   // this is where we changed to property!
-  //   // if you have multi-group, you will need to change here
-  //   if (isSwapped) {
-  //     // Toggle done state.
-  //     taskToToggle.done = !taskToToggle.done;
-  //   } else {
-  //     // Let done state pass.
-  //     taskToToggle.done = taskToToggle.done;
-  //   }
-
-  //   return toggleOfCopy;
-  // }
-
-  remove(index: number, tasks: any[]): void {
-    this.todoService.deleteTask(tasks[index]);
-    this.getTodos();
+  remove(item: any[]): void {
+    this.fireStore.deleteTask(item).then((done) => {
+      this.getTodos();
+    });
     // this.todoService.deleteTask(tasks[index]).subscribe(() => {
     // console.log('get tasks')
     // });

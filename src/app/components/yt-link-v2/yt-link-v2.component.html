@@ -1,7 +1,7 @@
 <div class="content">
 
   <div>
-    <h1>My Video Dashboard</h1>
+    <h1>My Video Dashboard - Firebase</h1>
     <mat-form-field class="example-full-width">
       <mat-label>Search Video</mat-label>
       <input matInput [(ngModel)]="filterName" placeholder="Description" />
@@ -40,7 +40,7 @@
             <span>
               <a href="{{ item.url }}">{{ item.description }}</a>
             </span>
-            <a (click)="remove(i, todo)" class="delete-button">
+            <a (click)="remove(todo)" class="delete-button">
               <i class="material-icons">delete</i>
             </a>
           </div>
@@ -71,7 +71,7 @@
             <span>
               <a href="{{ item.url }}">{{ item.description }}</a>
             </span>
-            <a (click)="remove(i, done)" class="delete-button">
+            <a (click)="remove(done)" class="delete-button">
               <i class="material-icons"> delete </i>
             </a>
           </div>
@@ -99,7 +99,7 @@
             <span>
               <a href="{{ item.url }}">{{ item.description }}</a>
             </span>
-            <a (click)="remove(i, maybeLater)" class="delete-button">
+            <a (click)="remove(maybeLater)" class="delete-button">
               <i class="material-icons">delete</i>
             </a>
           </div>
