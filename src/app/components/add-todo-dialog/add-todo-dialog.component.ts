@@ -11,19 +11,25 @@ import { TodoService } from '../../services/todo.service';
   styleUrls: ['./add-todo-dialog.component.css'],
 })
 export class AddTodoDialogComponent {
-  todoData: any = {};
+  todoData: any = {
+    description: ``,
+    url: ``,
+  };
 
   constructor(
     public dialogRef: MatDialogRef<AddTodoDialogComponent>,
-    private todoService: TodoService,
-    // private store: Store<any>
+    private todoService: TodoService // private store: Store<any>
   ) {}
 
-  save(todoForm: NgForm): void {
+  doSubmit(todoForm: NgForm): void {
     if (todoForm.invalid) {
       return;
     }
-    this.todoService.addTask(todoForm.value.description);
+
+    console.log(`todoForm.value.url`, todoForm.value.url);
+
+    this.todoService.addTask(todoForm.value.description, todoForm.value.url);
+
     this.dialogRef.close();
   }
 

@@ -1,26 +1,47 @@
-<h2>New Task</h2>
+<h2>New Link</h2>
 
-<form
-#todoForm="ngForm"
-(ngSubmit)="save(todoForm)">
+<form #todoForm="ngForm" (ngSubmit)="doSubmit(todoForm)">
   <mat-form-field>
     <input
       matInput
-      placeholder="Write task description here."
-      required
+      placeholder="Write description here."
       #description="ngModel"
       name="description"
       [(ngModel)]="todoData.description"
+      required
     />
-
     <mat-error
-      *ngIf="description.invalid && (description.dirty || description.touched)"
+      *ngIf="description.invalid &&
+      (description.dirty || description.touched)"
     >
       <div *ngIf="description.errors.required">
         Description is required.
       </div>
     </mat-error>
   </mat-form-field>
+
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Write url here."
+      required
+      #url="ngModel"
+      name="url"
+      [(ngModel)]="todoData.url"
+    />
+    <mat-error
+      *ngIf="url.invalid &&
+      (url.dirty || url.touched)"
+    >
+      <div *ngIf="url.errors.required">
+        url is required.
+      </div>
+    </mat-error>
+  </mat-form-field>
+
+
+
+
   <br />
 
   <button

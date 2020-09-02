@@ -1,43 +1,42 @@
 <div>
-  <h1>My Dashboard</h1>
+  <h1>My Video Dashboard</h1>
   <mat-form-field class="example-full-width">
-    <mat-label>Search Task</mat-label>
+    <mat-label>Search Video</mat-label>
     <input matInput [(ngModel)]="filterName"
     placeholder="Description">
   </mat-form-field>
 </div>
 
-<div class="center">
+<div cdkDropListGroup
+  class="center">
   <div
-  class="container todo-container"
-  style="position: relative;">
+    class="container todo-container"
+    style="position: relative;">
 
     <h2>To Do</h2>
     <div style="position: relative;">
 
       <div
-      cdkDropList
-      [cdkDropListData]="todo"
-      (cdkDropListDropped)="drop($event)"
-      #todoList="cdkDropList"
-      [cdkDropListConnectedTo]="[doneList]"
-      class="todo-list"
+        cdkDropList
+        [cdkDropListData]="todo"
+        (cdkDropListDropped)="drop($event)"
+        class="todo-list"
       >
         <div
-        cdkDrag
-        *ngFor="let item of todo | filterByName:filterName; index as i"
-        [cdkDragData]="item"
-        class="todo-box container"
+          cdkDrag
+          *ngFor="let item of todo | filterByName:filterName; index as i"
+          [cdkDragData]="item"
+          class="todo-box container"
         >
             <span>
-              {{item.description}}
+              <a href="{{item.url}}">{{item.description}}</a>
             </span>
             <a
-            (click)="removeTodo(i, todo)"
-            class="delete-button"
+              (click)="removeTodo(i, todo)"
+              class="delete-button"
             >
             <i
-            class="material-icons">delete</i>
+              class="material-icons">delete</i>
             </a>
         </div>
       </div>
@@ -47,7 +46,7 @@
     <button
       mat-button color="primary"
       (click)="openAddTodoDialog()">
-      New Task
+      New Video
     </button>
   </div>
 
@@ -55,20 +54,19 @@
     <h2>Done</h2>
     <div>
       <div
-      cdkDropList
-      #doneList="cdkDropList"
-      [cdkDropListData]="done"
-      [cdkDropListConnectedTo]="[todoList]"
-      class="todo-list"
-      (cdkDropListDropped)="drop($event)">
+        cdkDropList
+        [cdkDropListData]="done"
+        (cdkDropListDropped)="drop($event)"
+        class="todo-list"
+      >
         <div
-        cdkDrag
-        *ngFor="let item of done | filterByName:filterName; index as i"
-        [cdkDragData]="item"
-        class="todo-box container"
+          cdkDrag
+          *ngFor="let item of done | filterByName:filterName; index as i"
+          [cdkDragData]="item"
+          class="todo-box container"
         >
             <span>
-              {{item.description}}
+              <a href="{{item.url}}">{{item.description}}</a>
             </span>
             <a
             (click)="removeTodo(i, done)"

@@ -34,15 +34,15 @@ export class YtLinkV1Component implements OnInit, AfterViewInit {
   allTasks: any = [];
   todo: any = [];
   done: any = [];
-  myControl = new FormControl();
+  // myControl = new FormControl();
   filterName: string;
 
-  items$: any;
-  error$: any;
+  // items$: any;
+  // error$: any;
 
 
   constructor(
-    private ngZone: NgZone,
+    // private ngZone: NgZone,
     private todoService: TodoService,
     public dialog: MatDialog,
     // private store: Store<any>

@@ -18,7 +18,7 @@ export class TodoService {
     return tasks;
   }
 
-  addTask(addItem: string) {
+  addTask(addDesc: string, addItemUrl: string) {
     const tasksStored = window.localStorage.getItem('tasks');
     let tasks = [];
     if (tasksStored !== null) {
@@ -26,7 +26,8 @@ export class TodoService {
     }
     const newTask: ToDo = {
       done: false,
-      description: addItem,
+      description: addDesc,
+      url: addItemUrl,
       id: tasks.length + 1,
     };
 
@@ -49,6 +50,7 @@ export class TodoService {
           item.order = task.order;
           item.description = task.description;
           item.id = task.id;
+          item.url = task.url;
         }
       });
 
