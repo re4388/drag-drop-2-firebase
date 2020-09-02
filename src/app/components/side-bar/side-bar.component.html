@@ -1,0 +1,78 @@
+<section class="{{ theme }}">
+  <mat-toolbar color="primary" class="demo-app-header">
+    <button
+      type="button"
+      aria-label="Toggle sidenav"
+      mat-icon-button
+      (click)="sideNav.toggle()"
+      *ngIf="isHandset$ | async"
+    >
+      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
+    <span>Angular Material - 20200720</span>
+
+    <!-- 在這之後的都會被推到右邊去 -->
+    <span class="toolbar-separate"></span>
+
+    <button mat-button (click)="toggleTheme()">切換theme</button>
+
+    <button mat-button *ngIf="bidiMode === 'ltr'" (click)="bidiMode = 'rtl'">
+      LTR
+    </button>
+    <button mat-button *ngIf="bidiMode === 'rtl'" (click)="bidiMode = 'ltr'">
+      RTL
+    </button>
+
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="messageMenu"
+      #menuTrigger="matMenuTrigger"
+    >
+      <mat-icon>message</mat-icon>
+    </button>
+    <button mat-icon-button>
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+
+    <mat-menu #messageMenu="matMenu">
+      <button mat-menu-item>Hot News</button>
+      <button mat-menu-item>Setting</button>
+    </mat-menu>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="demo-app-container">
+    <mat-sidenav
+      #sideNav
+      class="demo-app-sidenav"
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false"
+    >
+      <!-- <mat-toolbar>Demo</mat-toolbar> -->
+      <mat-nav-list>
+        <h1 matSubheader>Sub Header 1</h1>
+        <a mat-list-item routerLink="yt-link-v0">v0</a>
+        <a mat-list-item routerLink="yt-link-v1">v1</a>
+        <!-- <a mat-list-item routerLink="dynamic-grid">Dynamic Grid</a> -->
+        <!-- <a mat-list-item routerLink="simple-http">simple-http</a> -->
+        <mat-divider></mat-divider>
+        <h1 matSubheader>Sub Header 2</h1>
+        <!-- <a mat-list-item routerLink="button-icon">Button & Icon</a>
+        <a mat-list-item routerLink="survey">Survey</a>
+        <a mat-list-item routerLink="blog">Blog</a>
+        <a mat-list-item routerLink="inbox">Inbox</a>
+        <a mat-list-item routerLink="cdk">cdk</a>
+        <a mat-list-item routerLink="auto-logout">auto logout</a> -->
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content
+      [dir]="bidiMode"
+      (dirChange)="logDirChange($event)"
+      cdkScrollable
+    >
+      <!-- <button mat-button (click)="drawer.toggle()">toggle side nav</button> -->
+
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</section>

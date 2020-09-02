@@ -1,0 +1,85 @@
+<div>
+  <h1>My Dashboard</h1>
+  <mat-form-field class="example-full-width">
+    <mat-label>Search Task</mat-label>
+    <input matInput [(ngModel)]="filterName"
+    placeholder="Description">
+  </mat-form-field>
+</div>
+
+<div class="center">
+  <div
+  class="container todo-container"
+  style="position: relative;">
+
+    <h2>To Do</h2>
+    <div style="position: relative;">
+
+      <div
+      cdkDropList
+      [cdkDropListData]="todo"
+      (cdkDropListDropped)="drop($event)"
+      #todoList="cdkDropList"
+      [cdkDropListConnectedTo]="[doneList]"
+      class="todo-list"
+      >
+        <div
+        cdkDrag
+        *ngFor="let item of todo | filterByName:filterName; index as i"
+        [cdkDragData]="item"
+        class="todo-box container"
+        >
+            <span>
+              {{item.description}}
+            </span>
+            <a
+            (click)="removeTodo(i, todo)"
+            class="delete-button"
+            >
+            <i
+            class="material-icons">delete</i>
+            </a>
+        </div>
+      </div>
+    </div>
+    <br>
+
+    <button
+      mat-button color="primary"
+      (click)="openAddTodoDialog()">
+      New Task
+    </button>
+  </div>
+
+  <div class="todo-container">
+    <h2>Done</h2>
+    <div>
+      <div
+      cdkDropList
+      #doneList="cdkDropList"
+      [cdkDropListData]="done"
+      [cdkDropListConnectedTo]="[todoList]"
+      class="todo-list"
+      (cdkDropListDropped)="drop($event)">
+        <div
+        cdkDrag
+        *ngFor="let item of done | filterByName:filterName; index as i"
+        [cdkDragData]="item"
+        class="todo-box container"
+        >
+            <span>
+              {{item.description}}
+            </span>
+            <a
+            (click)="removeTodo(i, done)"
+            class="delete-button"
+            >
+              <i class="material-icons">
+                delete
+              </i>
+            </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
