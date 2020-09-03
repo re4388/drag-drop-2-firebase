@@ -5,8 +5,7 @@ import {
   AngularFirestoreCollection,
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-// import { v4 as uuidv4 } from 'uuid';
+import { map, take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +28,8 @@ export class TodoService {
           console.log(id);
           return { id, ...data };
         })
-      )
+      ),
+      take(1)
     );
   }
 

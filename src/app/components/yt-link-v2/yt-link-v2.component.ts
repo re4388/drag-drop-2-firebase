@@ -79,6 +79,12 @@ export class YtLinkV2Component implements OnInit {
       this.todo.sort(this.dynamicSort('order', 'asc'));
       this.done.sort(this.dynamicSort('order', 'asc'));
       this.maybeLater.sort(this.dynamicSort('order', 'asc'));
+
+      // a test for how many obs we can receive
+      // setTimeout(() => {
+      //   console.log(`2 sec`);
+      // }, 2000);
+
     });
   }
 
