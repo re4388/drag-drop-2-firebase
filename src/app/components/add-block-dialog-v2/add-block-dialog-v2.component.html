@@ -1,0 +1,32 @@
+<h2>New Block</h2>
+
+<form
+  #blockForm="ngForm"
+  (ngSubmit)="doSubmit(blockForm)">
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Write description here."
+      #description="ngModel"
+      name="description"
+      [(ngModel)]="blockData.description"
+      required
+    />
+    <mat-error
+      *ngIf="description.invalid &&
+      (description.dirty || description.touched)"
+    >
+      <div *ngIf="description.errors.required">
+        Description is required.
+      </div>
+    </mat-error>
+  </mat-form-field>
+  <br />
+
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit">
+    Add
+  </button>
+</form>

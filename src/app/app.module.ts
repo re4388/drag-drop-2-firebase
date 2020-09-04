@@ -48,6 +48,7 @@ import { FilterByNamePipe } from './pipes/filter-by-name.pipe';
 import { YtLinkV2Component } from './components/yt-link-v2/yt-link-v2.component';
 import { AddTodoDialogV2Component } from './components/add-todo-dialog-v2/add-todo-dialog-v2.component';
 import { environment } from 'src/environments/environment';
+import { AddBlockDialogV2Component } from './components/add-block-dialog-v2/add-block-dialog-v2.component';
 
 @NgModule({
   // where you declare your component
@@ -60,6 +61,7 @@ import { environment } from 'src/environments/environment';
     FilterByNamePipe,
     YtLinkV2Component,
     AddTodoDialogV2Component,
+    AddBlockDialogV2Component,
   ],
   // where you import your module
   imports: [

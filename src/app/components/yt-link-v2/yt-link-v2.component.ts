@@ -1,3 +1,4 @@
+import { AddBlockDialogV2Component } from './../add-block-dialog-v2/add-block-dialog-v2.component';
 import { AddTodoDialogV2Component } from './../add-todo-dialog-v2/add-todo-dialog-v2.component';
 import {
   OnInit,
@@ -64,6 +65,16 @@ export class YtLinkV2Component implements OnInit {
     });
   }
 
+  openAddBlockDialog(): void{
+    const dialogRef = this.dialog.open(AddBlockDialogV2Component, {
+      width: '70vw',
+      data: {},
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      this.getTodos();
+    });
+  }
+
   getTodos(): void {
     this.fireStore.getTasks().subscribe((tasks) => {
       console.log(`getTodos(): `, tasks);
@@ -84,7 +95,6 @@ export class YtLinkV2Component implements OnInit {
       // setTimeout(() => {
       //   console.log(`2 sec`);
       // }, 2000);
-
     });
   }
 
@@ -181,13 +191,10 @@ export class YtLinkV2Component implements OnInit {
 
     // update list
     // console.log(`consolidatedList`, consolidatedList);
-    this.fireStore.updateTask(taskToToggle,
-      consolidatedList).then((tasks) => {
+    this.fireStore.updateTask(taskToToggle, consolidatedList).then((tasks) => {
       this.getTodos();
     });
-
   }
-
 
   remove(item: any[]): void {
     this.fireStore.deleteTask(item).then((done) => {
