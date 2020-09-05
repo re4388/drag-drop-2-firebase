@@ -29,7 +29,7 @@ export class TodoService {
           return { id, ...data };
         })
       ),
-      take(1)
+      // take(1)
     );
   }
 

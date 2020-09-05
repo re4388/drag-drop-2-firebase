@@ -7,6 +7,7 @@ import {
   ElementRef,
   NgZone,
   ViewChild,
+  OnDestroy,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 // import { TodoService } from '../../services/todo.service';
@@ -19,6 +20,7 @@ import {
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
 // import {
 //   getTasks,
 //   addTask,
@@ -32,16 +34,21 @@ import { FormControl } from '@angular/forms';
   templateUrl: './yt-link-v2.component.html',
   styleUrls: ['./yt-link-v2.component.css'],
 })
-export class YtLinkV2Component implements OnInit {
+export class YtLinkV2Component implements OnInit, OnDestroy {
   allTasks: any = [];
   todo: any = [];
   done: any = [];
-  maybeLater: any = [];
+  otherA: any = [];
+  otherB: any = [];
+  otherC: any = [];
   // myControl = new FormControl();
   filterName: string;
 
   // items$: any;
   // error$: any;
+
+  afterClosedSub$: Subscription;
+  alltasks$: Subscription;
 
   constructor(
     // private ngZone: NgZone,
@@ -60,36 +67,39 @@ export class YtLinkV2Component implements OnInit {
       width: '70vw',
       data: {},
     });
-    dialogRef.afterClosed().subscribe((result) => {
+
+    this.afterClosedSub$ = dialogRef.afterClosed().subscribe((result) => {
       this.getTodos();
     });
   }
 
-  openAddBlockDialog(): void{
-    const dialogRef = this.dialog.open(AddBlockDialogV2Component, {
-      width: '70vw',
-      data: {},
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      this.getTodos();
-    });
-  }
+  // openAddBlockDialog(): void {
+  //   const dialogRef = this.dialog.open(AddBlockDialogV2Component, {
+  //     width: '70vw',
+  //     data: {},
+  //   });
+  //   dialogRef.afterClosed().subscribe((result) => {
+  //     this.getTodos();
+  //   });
+  // }
 
   getTodos(): void {
-    this.fireStore.getTasks().subscribe((tasks) => {
+    this.alltasks$ = this.fireStore.getTasks().subscribe((tasks) => {
       console.log(`getTodos(): `, tasks);
       this.allTasks = tasks || [];
 
       this.todo = this.allTasks.filter((t) => t.group === `todo-group`);
       this.done = this.allTasks.filter((t) => t.group === `done-group`);
-      this.maybeLater = this.allTasks.filter(
-        (t) => t.group === `maybeLater-group`
-      );
+      this.otherA = this.allTasks.filter((t) => t.group === `otherA-group`);
+      this.otherB = this.allTasks.filter((t) => t.group === `otherB-group`);
+      this.otherC = this.allTasks.filter((t) => t.group === `otherB-group`);
 
       // Sort in ascending order of each list.
       this.todo.sort(this.dynamicSort('order', 'asc'));
       this.done.sort(this.dynamicSort('order', 'asc'));
-      this.maybeLater.sort(this.dynamicSort('order', 'asc'));
+      this.otherA.sort(this.dynamicSort('order', 'asc'));
+      this.otherB.sort(this.dynamicSort('order', 'asc'));
+      this.otherC.sort(this.dynamicSort('order', 'asc'));
 
       // a test for how many obs we can receive
       // setTimeout(() => {
@@ -206,12 +216,12 @@ export class YtLinkV2Component implements OnInit {
     // this.store.dispatch(deleteTask({ task: tasks[index] }));
   }
 
-  dynamicSort(property: string, order: string) {
+  dynamicSort(property: string, order: string): (a, b) => number {
     let sortOrder = 1;
     if (order === 'desc') {
       sortOrder = -1;
     }
-    return (a, b) => {
+    return (a: { [x: string]: number }, b: { [x: string]: number }) => {
       // a should come before b in the sorted order
       if (a[property] < b[property]) {
         return -1 * sortOrder;
@@ -223,5 +233,10 @@ export class YtLinkV2Component implements OnInit {
         return 0 * sortOrder;
       }
     };
+  }
+
+  ngOnDestroy(): void {
+    // this.afterClosedSub$.unsubscribe();
+    this.alltasks$.unsubscribe();
   }
 }

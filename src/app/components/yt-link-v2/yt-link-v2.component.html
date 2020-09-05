@@ -12,17 +12,18 @@
     <button
     mat-button color="primary"
     (click)="openAddTodoDialog()">
-      Add New Video
+      <h2>ADD NEW VIDEO</h2>
     </button>
   </div>
 
-  <div class="add-button">
+  <!-- TODO: next feature -->
+  <!-- <div class="add-button">
     <button
     mat-button color="primary"
     (click)="openAddBlockDialog()">
       Add New Block
     </button>
-  </div>
+  </div> -->
 
   <div cdkDropListGroup class="center">
 
@@ -30,8 +31,9 @@
 
     <!-- To-do  -->
     <div class="group-container">
-      <h2>To Do</h2>
+
       <div>
+        <!-- <h2>未看</h2> -->
         <div
           cdkDropList
           [cdkDropListData]="todo"
@@ -39,6 +41,13 @@
           class="group-list"
           id="todo-group"
         >
+        <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-description>
+            <h2>未看</h2>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
           <div
             cdkDrag
             *ngFor="let item of todo | filterByName: filterName; index as i"
@@ -52,6 +61,8 @@
               <i class="material-icons">delete</i>
             </a>
           </div>
+
+          </mat-expansion-panel>
         </div>
       </div>
 
@@ -59,9 +70,9 @@
 
     </div>
 
-    <!-- done  -->
+    <!-- done / archived -->
     <div class="group-container">
-      <h2>Done</h2>
+
       <div>
         <div
           cdkDropList
@@ -70,6 +81,12 @@
           class="group-list"
           id="done-group"
         >
+        <mat-expansion-panel [expanded]="false">
+        <mat-expansion-panel-header>
+          <mat-panel-description>
+            <h2>封存</h2>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
           <div
             cdkDrag
             *ngFor="let item of done | filterByName: filterName; index as i"
@@ -83,40 +100,122 @@
               <i class="material-icons"> delete </i>
             </a>
           </div>
+          </mat-expansion-panel>
         </div>
       </div>
     </div>
 
-    <!-- may-later -->
+    <!-- otherA -->
     <div class="group-container">
-      <h2>May Later</h2>
+
       <div>
         <div
           cdkDropList
-          [cdkDropListData]="maybeLater"
+          [cdkDropListData]="otherA"
           (cdkDropListDropped)="drop($event)"
           class="group-list"
-          id="maybeLater-group"
+          id="otherA-group"
         >
+        <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-description>
+            <h2>其他類別一</h2>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
           <div
             cdkDrag
-            *ngFor="let item of maybeLater | filterByName: filterName; index as i"
+            *ngFor="let item of otherA | filterByName: filterName; index as i"
             [cdkDragData]="item"
             class="group-box"
           >
             <span>
               <a href="{{ item.url }}">{{ item.description }}</a>
             </span>
-            <a (click)="remove(maybeLater)" class="delete-button">
+            <a (click)="remove(otherA)" class="delete-button">
               <i class="material-icons">delete</i>
             </a>
           </div>
+          </mat-expansion-panel>
         </div>
       </div>
 
       <br />
     </div>
 
+    <!-- otherB -->
+    <div class="group-container">
+
+      <div>
+        <div
+          cdkDropList
+          [cdkDropListData]="otherB"
+          (cdkDropListDropped)="drop($event)"
+          class="group-list"
+          id="otherB-group"
+        >
+        <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-description>
+            <h2>其他類別二</h2>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+          <div
+            cdkDrag
+            *ngFor="let item of otherB | filterByName: filterName; index as i"
+            [cdkDragData]="item"
+            class="group-box"
+          >
+            <span>
+              <a href="{{ item.url }}">{{ item.description }}</a>
+            </span>
+            <a (click)="remove(otherB)" class="delete-button">
+              <i class="material-icons">delete</i>
+            </a>
+          </div>
+          </mat-expansion-panel>
+        </div>
+      </div>
+
+      <br />
+    </div>
+
+
+    <!-- otherC -->
+    <div class="group-container">
+
+      <div>
+        <div
+          cdkDropList
+          [cdkDropListData]="otherB"
+          (cdkDropListDropped)="drop($event)"
+          class="group-list"
+          id="otherB-group"
+        >
+        <mat-expansion-panel [expanded]="false">
+        <mat-expansion-panel-header>
+          <mat-panel-description>
+            <h2>Sabrina</h2>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+          <div
+            cdkDrag
+            *ngFor="let item of otherB | filterByName: filterName; index as i"
+            [cdkDragData]="item"
+            class="group-box"
+          >
+            <span>
+              <a href="{{ item.url }}">{{ item.description }}</a>
+            </span>
+            <a (click)="remove(otherB)" class="delete-button">
+              <i class="material-icons">delete</i>
+            </a>
+          </div>
+          </mat-expansion-panel>
+        </div>
+      </div>
+
+      <br />
+    </div>
 
 
 

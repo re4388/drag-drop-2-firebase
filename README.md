@@ -1,5 +1,19 @@
 # DrapdropYtLink
 
+
+
+
+## My personal Note
+- TODO:
+  - add a feature to dynamically add block
+
+
+
+
+
+
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.7.
 
 ## Development server
