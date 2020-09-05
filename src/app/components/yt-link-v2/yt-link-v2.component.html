@@ -186,10 +186,10 @@
       <div>
         <div
           cdkDropList
-          [cdkDropListData]="otherB"
+          [cdkDropListData]="otherC"
           (cdkDropListDropped)="drop($event)"
           class="group-list"
-          id="otherB-group"
+          id="otherC-group"
         >
         <mat-expansion-panel [expanded]="false">
         <mat-expansion-panel-header>
@@ -199,14 +199,14 @@
         </mat-expansion-panel-header>
           <div
             cdkDrag
-            *ngFor="let item of otherB | filterByName: filterName; index as i"
+            *ngFor="let item of otherC | filterByName: filterName; index as i"
             [cdkDragData]="item"
             class="group-box"
           >
             <span>
               <a href="{{ item.url }}">{{ item.description }}</a>
             </span>
-            <a (click)="remove(otherB)" class="delete-button">
+            <a (click)="remove(otherC)" class="delete-button">
               <i class="material-icons">delete</i>
             </a>
           </div>

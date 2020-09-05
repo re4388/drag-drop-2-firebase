@@ -92,7 +92,7 @@ export class YtLinkV2Component implements OnInit, OnDestroy {
       this.done = this.allTasks.filter((t) => t.group === `done-group`);
       this.otherA = this.allTasks.filter((t) => t.group === `otherA-group`);
       this.otherB = this.allTasks.filter((t) => t.group === `otherB-group`);
-      this.otherC = this.allTasks.filter((t) => t.group === `otherB-group`);
+      this.otherC = this.allTasks.filter((t) => t.group === `otherC-group`);
 
       // Sort in ascending order of each list.
       this.todo.sort(this.dynamicSort('order', 'asc'));
