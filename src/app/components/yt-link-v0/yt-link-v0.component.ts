@@ -37,24 +37,10 @@ export class YtLinkV0Component{
       groupIndex: 0,
     },
   ];
+  vidType2 = [];
+  vidType3 = [];
 
-  vidType2 = [
-    // {
-    //   name: `2020-08-18 MIT CDOIQ Keynote`,
-    //   url: `https://www.youtube.com/watch?v=Eiar_SNMqUA`,
-    //   groupIndex: 1,
-    // },
-  ];
-
-  vidType3 = [
-    // {
-    //   name: `天才 IT 大臣 唐鳳「戰疫」一戰揚名 | 華視新聞 20200817`,
-    //   url: `https://www.youtube.com/watch?v=El8Mb4yfCWw`,
-    //   groupIndex: 2,
-    // },
-  ];
-
-  drop(event: CdkDragDrop<any[]>) {
+  drop(event: CdkDragDrop<any[]>): void {
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,

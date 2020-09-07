@@ -49,6 +49,7 @@ import { YtLinkV2Component } from './components/yt-link-v2/yt-link-v2.component'
 import { AddTodoDialogV2Component } from './components/add-todo-dialog-v2/add-todo-dialog-v2.component';
 import { environment } from 'src/environments/environment';
 import { AddBlockDialogV2Component } from './components/add-block-dialog-v2/add-block-dialog-v2.component';
+import { CdkDropComponent } from './components/yt-link-v0/cdk-drop/cdk-drop.component';
 
 @NgModule({
   // where you declare your component
@@ -62,6 +63,7 @@ import { AddBlockDialogV2Component } from './components/add-block-dialog-v2/add-
     YtLinkV2Component,
     AddTodoDialogV2Component,
     AddBlockDialogV2Component,
+    CdkDropComponent,
   ],
   // where you import your module
   imports: [

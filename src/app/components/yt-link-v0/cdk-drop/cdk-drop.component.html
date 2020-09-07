@@ -1,0 +1,15 @@
+<div
+  cdkDropList
+  [cdkDropListData]="data"
+  (cdkDropListDropped)="drop($event)"
+  class="drag-drop-list"
+>
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-description> {{ title }} </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div cdkDrag *ngFor="let item of data" class="drag-drop-box">
+      <a href="{{ item.url }}">{{ item.name }}</a>
+    </div>
+  </mat-expansion-panel>
+</div>
