@@ -51,6 +51,11 @@ import { environment } from 'src/environments/environment';
 import { AddBlockDialogV2Component } from './components/add-block-dialog-v2/add-block-dialog-v2.component';
 import { CdkDropComponent } from './components/yt-link-v0/cdk-drop/cdk-drop.component';
 
+
+import { HttpClientModule } from '@angular/common/http';
+
+
+
 @NgModule({
   // where you declare your component
   declarations: [
@@ -69,6 +74,7 @@ import { CdkDropComponent } from './components/yt-link-v0/cdk-drop/cdk-drop.comp
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     LayoutModule,
     OverlayModule,
     BidiModule,

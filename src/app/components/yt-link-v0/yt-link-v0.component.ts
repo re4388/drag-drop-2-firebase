@@ -5,6 +5,10 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
+import { GetVideoService } from './services/get-video.service';
+import { BackendData, Video } from './model/video';
+import { Observable } from 'rxjs';
+import { map, tap, switchMap } from 'rxjs/operators';
 
 
 @Component({
@@ -12,56 +16,20 @@ import {
   templateUrl: './yt-link-v0.component.html',
   styleUrls: ['./yt-link-v0.component.css'],
 })
-export class YtLinkV0Component{
-  dataGroup1 = dataSource;
+export class YtLinkV0Component implements OnInit {
 
-  vidType1 = [
-    {
-      name: `抗疫有成？施政無能？韓國如何應對捲土重來的疫情、醫改和高漲房價`,
-      url: `https://www.youtube.com/watch?v=I289HAUZTmM`,
-      groupIndex: 0,
-    },
-    {
-      name: `8.19.20【17 中廣論壇】鍾佳濱 live`,
-      url: `https://www.youtube.com/watch?v=qhgN-foGvDw`,
-      groupIndex: 0,
-    },
-    {
-      name: `Data Analysis with Python: Part 2 of 6 (Live Course)`,
-      url: `https://www.youtube.com/watch?v=I289HAUZTmM`,
-      groupIndex: 0,
-    },
-    {
-      name: `How to Learn Online Like a Pro with Treehouse's Guil Hernandez`,
-      url: `https://www.youtube.com/watch?v=WvAz833OkFg`,
-      groupIndex: 0,
-    },
-  ];
-  vidType2 = [];
-  vidType3 = [];
+  constructor(private service: GetVideoService) { }
+  vidType1$: Observable<Video> = this.service
+    .fetchData()
+    .pipe(map((d) => d.vidType1));
 
-  drop(event: CdkDragDrop<any[]>): void {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-      // event.previousContainer.data.forEach((x, index) => {
-      //   x.groupIndex = index;
-      // });
-      // console.log(`event.item`, event.item.dropContainer.id);
-      console.log(`event.container, TO =>`, event.container.id);
-    }
-    // event.container.data.forEach((x, index) => {
-    //   x.groupIndex = index;
-    // });
-  }
+  vidType2$: Observable<Video> = this.service
+    .fetchData()
+    .pipe(map((d) => d.vidType2));
+
+  vidType3$: Observable<Video> = this.service
+    .fetchData()
+    .pipe(map((d) => d.vidType3));
+
+  ngOnInit(): void {}
 }

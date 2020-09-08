@@ -1,7 +1,7 @@
 <div cdkDropListGroup>
-  <app-cdk-drop [data]="vidType1" title="not see yet"></app-cdk-drop>
-  <app-cdk-drop [data]="vidType2" title="seen"></app-cdk-drop>
-  <app-cdk-drop [data]="vidType3" title="archived"></app-cdk-drop>
+  <app-cdk-drop [data]="vidType1$ | async" title="not see yet"></app-cdk-drop>
+  <app-cdk-drop [data]="vidType2$ | async" title="seen"></app-cdk-drop>
+  <app-cdk-drop [data]="vidType3$ | async" title="archived"></app-cdk-drop>
 </div>
 
 
