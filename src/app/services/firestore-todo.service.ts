@@ -5,7 +5,8 @@ import {
   AngularFirestoreCollection,
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { map, take, tap } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root',
@@ -21,14 +22,15 @@ export class TodoService {
   getTasks() {
     this.savedCollection = this.afs.collection<ToDo>(this.collectionName);
     return this.savedCollection.snapshotChanges().pipe(
-      map((actions) =>
+      map( actions =>
         actions.map((a) => {
           const data = a.payload.doc.data() as ToDo;
           const id = a.payload.doc.id;
-          console.log(id);
+          // console.log(id);
           return { id, ...data };
         })
       ),
+      tap(console.log),
       // take(1)
     );
   }

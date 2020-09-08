@@ -17,7 +17,7 @@ export class GetVideoService {
         groupIndex: 0,
       },
       {
-        name: 'How to Learn Online Like a Pro with Treehouse\'s Guil Hernandez',
+        name: "How to Learn Online Like a Pro with Treehouse's Guil Hernandez",
         url: 'https://www.youtube.com/watch?v=WvAz833OkFg',
         groupIndex: 0,
       },
@@ -42,6 +42,7 @@ export class GetVideoService {
   public fetchData = () =>
     timer(200 + 1.5 * 1000 * Math.random()).pipe(
       map((_) => this.data),
-      tap(console.log)
+      // tap((val) => console.log(`tap shows: ${val}`))
+      tap(console.log),
     )
 }
