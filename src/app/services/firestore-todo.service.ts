@@ -12,9 +12,7 @@ import { map, take, tap, share } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class TodoService {
-
   constructor(private afs: AngularFirestore) {}
-
 
   collectionName = `ToWatchCollection`;
   private savedCollection: AngularFirestoreCollection<any>;
@@ -22,7 +20,7 @@ export class TodoService {
   getTasks() {
     this.savedCollection = this.afs.collection<ToDo>(this.collectionName);
     return this.savedCollection.snapshotChanges().pipe(
-      map( actions =>
+      map((actions) =>
         actions.map((a) => {
           const data = a.payload.doc.data() as ToDo;
           const id = a.payload.doc.id;
@@ -35,6 +33,18 @@ export class TodoService {
       // take(1)
     );
   }
+
+  // getTrashGroup() {
+  //   return this.afs
+  //     .collection(this.collectionName, (ref) =>
+  //       // userUid in document field need match to localStorage uid
+  //       ref
+  //         .where('group', '==', 'trash-group')
+  //         // .orderBy('dateSelected', 'desc')
+  //     )
+  //     .snapshotChanges();
+
+  // }
 
   addTask(description: string, url: string) {
     const date = new Date();
@@ -50,7 +60,7 @@ export class TodoService {
     return this.savedCollection.add(newTask);
   }
 
-  updateTask(toggleTask, consolidatedList) {
+  updateTask(toggleTask) {
     const taskToToggle = toggleTask;
     console.log(`toggleTask`, toggleTask);
     return this.savedCollection
@@ -63,4 +73,16 @@ export class TodoService {
     console.log(data[0].id);
     return this.savedCollection.doc(data[0].id).delete();
   }
+
+
+  moveToTrash(data) {
+    return this.savedCollection
+      .doc(data[0].id)
+        .set({ group: 'trash-group' }, { merge: true });
+  }
+
+
+
+
+
 }

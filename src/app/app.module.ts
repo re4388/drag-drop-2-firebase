@@ -53,6 +53,7 @@ import { CdkDropComponent } from './components/yt-link-v0/cdk-drop/cdk-drop.comp
 
 
 import { HttpClientModule } from '@angular/common/http';
+import { ArchiveComponent } from './components/archive/archive.component';
 
 
 
@@ -69,6 +70,7 @@ import { HttpClientModule } from '@angular/common/http';
     AddTodoDialogV2Component,
     AddBlockDialogV2Component,
     CdkDropComponent,
+    ArchiveComponent,
   ],
   // where you import your module
   imports: [

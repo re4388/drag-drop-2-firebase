@@ -68,7 +68,7 @@ export class YtLinkV2Component implements OnInit, OnDestroy {
       data: {},
     });
 
-    this.afterClosedSub$ = dialogRef.afterClosed().subscribe( res => {
+    this.afterClosedSub$ = dialogRef.afterClosed().subscribe((res) => {
       this.getTodos();
     });
   }
@@ -100,8 +100,6 @@ export class YtLinkV2Component implements OnInit, OnDestroy {
       this.otherA.sort(this.dynamicSort('order', 'asc'));
       this.otherB.sort(this.dynamicSort('order', 'asc'));
       this.otherC.sort(this.dynamicSort('order', 'asc'));
-
-
     });
   }
 
@@ -198,20 +196,22 @@ export class YtLinkV2Component implements OnInit, OnDestroy {
 
     // update list
     // console.log(`consolidatedList`, consolidatedList);
-    this.fireStore.updateTask(taskToToggle, consolidatedList).then((tasks) => {
+    this.fireStore.updateTask(taskToToggle).then((tasks) => {
       this.getTodos();
     });
   }
 
-  remove(item: any[]): void {
-    this.fireStore.deleteTask(item).then((done) => {
+  moveToTrash(item: any[]): void {
+    this.fireStore.moveToTrash(item).then((done) => {
       this.getTodos();
     });
-    // this.todoService.deleteTask(tasks[index]).subscribe(() => {
-    // console.log('get tasks')
-    // });
-    // this.store.dispatch(deleteTask({ task: tasks[index] }));
   }
+
+  // remove(item: any[]): void {
+  //   this.fireStore.deleteTask(item).then((done) => {
+  //     this.getTodos();
+  //   });
+  // }
 
   dynamicSort(property: string, order: string): (a, b) => number {
     let sortOrder = 1;
