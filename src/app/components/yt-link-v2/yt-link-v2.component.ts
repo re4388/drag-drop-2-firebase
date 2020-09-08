@@ -68,7 +68,7 @@ export class YtLinkV2Component implements OnInit, OnDestroy {
       data: {},
     });
 
-    this.afterClosedSub$ = dialogRef.afterClosed().subscribe((result) => {
+    this.afterClosedSub$ = dialogRef.afterClosed().subscribe( res => {
       this.getTodos();
     });
   }
@@ -85,7 +85,7 @@ export class YtLinkV2Component implements OnInit, OnDestroy {
 
   getTodos(): void {
     this.alltasks$ = this.fireStore.getTasks().subscribe((tasks) => {
-      console.log(`getTodos(): `, tasks);
+      // console.log(`getTodos(): `, tasks);
       this.allTasks = tasks || [];
 
       this.todo = this.allTasks.filter((t) => t.group === `todo-group`);
@@ -101,10 +101,7 @@ export class YtLinkV2Component implements OnInit, OnDestroy {
       this.otherB.sort(this.dynamicSort('order', 'asc'));
       this.otherC.sort(this.dynamicSort('order', 'asc'));
 
-      // a test for how many obs we can receive
-      // setTimeout(() => {
-      //   console.log(`2 sec`);
-      // }, 2000);
+
     });
   }
 
@@ -236,7 +233,6 @@ export class YtLinkV2Component implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // this.afterClosedSub$.unsubscribe();
     this.alltasks$.unsubscribe();
   }
 }

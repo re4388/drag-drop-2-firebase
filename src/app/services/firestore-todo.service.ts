@@ -5,7 +5,7 @@ import {
   AngularFirestoreCollection,
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { map, take, tap } from 'rxjs/operators';
+import { map, take, tap, share } from 'rxjs/operators';
 
 
 @Injectable({
@@ -31,6 +31,7 @@ export class TodoService {
         })
       ),
       tap(console.log),
+      share()
       // take(1)
     );
   }
