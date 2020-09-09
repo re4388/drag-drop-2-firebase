@@ -12,7 +12,7 @@
             <span>
               <a href="{{ item.url}}"> {{ item.description }}</a>
             </span>
-            <a (click)="remove(trash)" class="delete-button">
+            <a (click)="remove(trash, item)" class="delete-button">
               <i class="material-icons">delete</i>
             </a>
           </div>

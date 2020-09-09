@@ -56,7 +56,7 @@
             <span>
               <a href="{{ item.url }}">{{ item.description }}</a>
             </span>
-            <a (click)="moveToTrash(todo)" class="delete-button">
+            <a (click)="moveToTrash(todo,item )" class="delete-button">
               <i class="material-icons">delete</i>
             </a>
           </div>
@@ -95,7 +95,7 @@
             <span>
               <a href="{{ item.url }}">{{ item.description }}</a>
             </span>
-            <a (click)="moveToTrash(done)" class="delete-button">
+            <a (click)="moveToTrash(done, item)" class="delete-button">
               <i class="material-icons"> delete </i>
             </a>
           </div>
@@ -130,7 +130,7 @@
             <span>
               <a href="{{ item.url }}">{{ item.description }}</a>
             </span>
-            <a (click)="moveToTrash(otherA)" class="delete-button">
+            <a (click)="moveToTrash(otherA, item)" class="delete-button">
               <i class="material-icons">delete</i>
             </a>
           </div>
@@ -167,7 +167,7 @@
             <span>
               <a href="{{ item.url }}">{{ item.description }}</a>
             </span>
-            <a (click)="moveToTrash(otherB)" class="delete-button">
+            <a (click)="moveToTrash(otherB, item)" class="delete-button">
               <i class="material-icons">delete</i>
             </a>
           </div>
@@ -205,7 +205,7 @@
             <span>
               <a href="{{ item.url }}">{{ item.description }}</a>
             </span>
-            <a (click)="moveToTrash(otherC)" class="delete-button">
+            <a (click)="moveToTrash(otherC, item)" class="delete-button">
               <i class="material-icons">delete</i>
             </a>
           </div>

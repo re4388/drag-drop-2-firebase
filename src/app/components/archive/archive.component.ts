@@ -42,8 +42,8 @@ export class ArchiveComponent implements OnInit {
     });
   }
 
-  remove(item: any[]): void {
-    this.fireStore.deleteTask(item).then((done) => {
+  remove(todo: any[], item): void {
+    this.fireStore.deleteTask(todo, item).then((done) => {
       this.getItems();
     });
   }

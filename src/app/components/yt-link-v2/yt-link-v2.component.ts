@@ -201,8 +201,8 @@ export class YtLinkV2Component implements OnInit, OnDestroy {
     });
   }
 
-  moveToTrash(item: any[]): void {
-    this.fireStore.moveToTrash(item).then((done) => {
+  moveToTrash(todo: any[], item): void {
+    this.fireStore.moveToTrash(todo, item).then((done) => {
       this.getTodos();
     });
   }

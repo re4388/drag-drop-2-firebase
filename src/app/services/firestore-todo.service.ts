@@ -28,7 +28,7 @@ export class TodoService {
           return { id, ...data };
         })
       ),
-      tap(console.log),
+      // tap(console.log),
       share()
       // take(1)
     );
@@ -68,21 +68,19 @@ export class TodoService {
       .set({ group: taskToToggle.group }, { merge: true });
   }
 
-  deleteTask(data) {
-    console.log(data);
-    console.log(data[0].id);
-    return this.savedCollection.doc(data[0].id).delete();
-  }
-
-
-  moveToTrash(data) {
+  deleteTask(data, item) {
+    // console.log(data);
+    // console.log(item.id);
     return this.savedCollection
-      .doc(data[0].id)
-        .set({ group: 'trash-group' }, { merge: true });
+      .doc(item.id)
+      .delete();
   }
 
-
-
-
-
+  moveToTrash(data, item) {
+    // console.log('data[0].id :', data[0]);
+    // console.log('item :', item);
+    return this.savedCollection
+      .doc(item.id)
+      .set({ group: 'trash-group' }, { merge: true });
+  }
 }
