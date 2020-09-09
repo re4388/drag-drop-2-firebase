@@ -47,4 +47,12 @@ export class ArchiveComponent implements OnInit {
       this.getItems();
     });
   }
+
+  restore(todo: any[], item): void {
+    this.fireStore.restore(todo, item).then((done) => {
+      this.getItems();
+    });
+  }
 }
+
+

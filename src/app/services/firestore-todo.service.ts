@@ -71,9 +71,15 @@ export class TodoService {
   deleteTask(data, item) {
     // console.log(data);
     // console.log(item.id);
+    return this.savedCollection.doc(item.id).delete();
+  }
+
+  restore(data, item) {
+    // console.log(data);
+    // console.log(item.id);
     return this.savedCollection
       .doc(item.id)
-      .delete();
+      .set({ group: 'todo-group' }, { merge: true });
   }
 
   moveToTrash(data, item) {
