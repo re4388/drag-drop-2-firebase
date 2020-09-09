@@ -50,15 +50,22 @@
     >
       <!-- <mat-toolbar>Demo</mat-toolbar> -->
       <mat-nav-list>
-        <h1 matSubheader>Sub Header 1</h1>
-        <a mat-list-item routerLink="yt-link-v0">內測版 v0</a>
-        <a mat-list-item routerLink="yt-link-v1">內測版 v1</a>
-        <a mat-list-item routerLink="yt-link-v2">公測版v2</a>
+        <h1 matSubheader>功能</h1>
+        <a mat-list-item routerLink="yt-link-v2"><mat-icon>play_circle_filled</mat-icon>公測版v0.0.1</a>
+        <a mat-list-item routerLink="archive"><mat-icon>restore_from_trash</mat-icon>垃圾桶</a>
         <!-- <a mat-list-item routerLink="dynamic-grid">Dynamic Grid</a> -->
         <!-- <a mat-list-item routerLink="simple-http">simple-http</a> -->
         <mat-divider></mat-divider>
-        <h1 matSubheader>Sub Header 2</h1>
-        <a mat-list-item routerLink="archive">垃圾桶</a>
+        <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
+                <mat-expansion-panel-header>
+                    內部測試
+                </mat-expansion-panel-header>
+                <mat-nav-list dense>
+                  <a mat-list-item routerLink="yt-link-v0"><mat-icon>notification_important</mat-icon>內測版 v0</a>
+                  <a mat-list-item routerLink="yt-link-v1"><mat-icon>notification_important</mat-icon>內測版 v1</a>
+                </mat-nav-list>
+            </mat-expansion-panel>
+        <h1 matSubheader></h1>
         <!-- <a mat-list-item routerLink="button-icon">Button & Icon</a>
         <a mat-list-item routerLink="survey">Survey</a>
         <a mat-list-item routerLink="blog">Blog</a>
