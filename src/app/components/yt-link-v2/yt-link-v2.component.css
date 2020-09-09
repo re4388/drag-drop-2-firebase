@@ -5,8 +5,20 @@
 
 .add-button {
   text-align: left;
+  padding-bottom: 10px;
 }
 
+/* .mat-raised-button {
+  text-align: center;
+  background-color: lightblue;
+  opacity: 0.8;
+  position: relative;
+} */
+
+.add-video-text {
+  position: relative;
+  top: 10px;
+}
 
 .group-container {
   width: 400px;
