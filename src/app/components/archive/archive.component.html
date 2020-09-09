@@ -1,22 +1,18 @@
-
-
-        <mat-expansion-panel [expanded]="true">
-        <mat-expansion-panel-header>
-          <mat-panel-description>
-            <h2>Trash Can</h2>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-          <div
-            *ngFor="let item of trash ; index as i"
-          >
-            <span>
-              <a href="{{ item.url}}"> {{ item.description }}</a>
-            </span>
-            <a (click)="remove(trash, item)" class="delete-button">
-              <i class="material-icons">delete</i>
-            </a>
-          </div>
-          </mat-expansion-panel>
-
-
-
+<mat-expansion-panel [expanded]="true">
+  <mat-expansion-panel-header>
+    <mat-panel-description>
+      <h2>Trash Can</h2>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div *ngFor="let item of trash; index as i">
+    <span class="text-block">
+      <a href="{{ item.url }}"> {{ item.description }}</a>
+    </span>
+      <a (click)="remove(trash, item)" class="functional-button">
+        <i class="material-icons">delete</i>
+      </a>
+      <a (click)="restore(trash, item)" class="functional-button">
+        <i class="material-icons">restore</i>
+      </a>
+  </div>
+</mat-expansion-panel>

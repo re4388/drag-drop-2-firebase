@@ -54,11 +54,23 @@
 .todo-list.cdk-drop-list-dragging .todo-box:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
-.delete-button {
+.functional-button {
   cursor: pointer;
 }
 
+.material-icons {
+  padding-left: 5px;
+  display: inline-flex;
+  /* background-color: lightblue; */
 
+}
+
+.text-block {
+  /* background-color: lightblue; */
+  margin-bottom: 20px;
+  position: relative;
+  bottom: 5px;
+}
 
 .full {
   width: 100%;
